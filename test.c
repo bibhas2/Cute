@@ -17,5 +17,13 @@ main() {
 	val = dictionaryGet(d, "three");
 	printf("Val %s\n", val);
 
+	dictionaryRemove(d, "one");
+	dictionaryRemove(d, "two");
+	dictionaryRemove(d, "three");
+	val = dictionaryGet(d, "one");
+	printf("Val %s\n", val);
+	val = dictionaryGet(d, "two");
+	printf("Val %s\n", val);
+
 	deleteDictionary(d);
 }

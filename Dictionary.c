@@ -52,6 +52,31 @@ struct Node *_dictNodeGet(Dictionary *d, char *s)
     return NULL; /* not found */
 }
 
+void *dictionaryRemove(Dictionary *d, char *key)
+{
+	struct Node *np, *prev = NULL;
+	unsigned index = hash(d, key);
+
+	for (np = d->buckets[index]; np != NULL; np = np->next) {
+		if (strcmp(key, np->key) == 0) {
+			if (prev == NULL) {
+				d->buckets[index] = np->next;
+			} else {
+				prev->next = np->next;
+
+			}
+			void *value = np->value;
+			free(np->key);
+			free(np);
+
+			return value;	
+		}
+		prev = np;
+	}
+
+	return NULL; /* not found */
+}
+
 void* dictionaryGet(Dictionary *d, char *s) {
 	struct Node *n = _dictNodeGet(d, s);
 

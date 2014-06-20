@@ -14,4 +14,4 @@ Dictionary* newDictionaryWithSize(int bucketSize);
 void deleteDictionary(Dictionary* d);
 void *dictionaryGet(Dictionary *d, char *s);
 void dictionaryPut(Dictionary *d, char *key, void *value);
-
+void *dictionaryRemove(Dictionary *d, char *key);
