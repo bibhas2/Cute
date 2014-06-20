@@ -1,22 +1,21 @@
 #include <stdio.h>
-#include "String.h"
+#include "Dictionary.h"
 
 int
 main() {
-	String *s1 = newString(3);
-	String *s2 = newString(2);
+	Dictionary *d = newDictionary();
 
-	stringAppendChar(s1, 'a');	
-	stringAppendChar(s1, 'a');	
+	dictionaryPut(d, "one", "One - 1");
+	dictionaryPut(d, "two", "Two - 2");
 
-	puts(stringAsCString(s1));
+	char *val = dictionaryGet(d, "two");
+	printf("Val %s\n", val);
 
-	stringAppendChar(s1, 'b');	
-	stringAppendChar(s1, 'b');	
-	stringAppendChar(s1, 'b');	
+	val = dictionaryGet(d, "one");
+	printf("Val %s\n", val);
 
-	puts(stringAsCString(s1));
+	val = dictionaryGet(d, "three");
+	printf("Val %s\n", val);
 
-	deleteString(s1);
-	deleteString(s2);
+	deleteDictionary(d);
 }
