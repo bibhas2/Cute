@@ -68,7 +68,7 @@ stringAppendBuffer(String *str, const char *buffer, int length) {
 	str->length = newLength;
 }
 
-char*
+const char*
 stringAsCString(String *str) {
 	if (str->length == 0 || str->buffer[str->length - 1] != '\0') {
 		stringAppendChar(str, '\0');

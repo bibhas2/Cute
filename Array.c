@@ -4,11 +4,7 @@
 #include <string.h>
 #include <assert.h>
 
-typedef struct _Array {
-	void **buffer;
-	int length;
-	int capacity;
-} Array;
+#include "Array.h"
 
 Array*
 newArray(int capacity) {
