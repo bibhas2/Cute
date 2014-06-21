@@ -46,16 +46,7 @@ newStringWithString(String *str) {
 }
 
 void
-_stripTrailChar(String *str) {
-	if (str->length > 0 && str->buffer[str->length - 1] == '\0') {
-		str->length = str->length - 1;
-	}
-}
-
-void
 stringAppendChar(String *str, char ch) {
-	_stripTrailChar(str);
-
 	if (str->length == str->capacity) {
 		str->buffer = realloc(str->buffer,
 			str->capacity * sizeof(char) * 2);
@@ -73,8 +64,6 @@ stringAppendString(String *str, String *toAdd) {
 
 void
 stringAppendBuffer(String *str, const char *buffer, int length) {
-	_stripTrailChar(str);
-
 	//Do we have room to fit the string?
 	if (length <= (str->capacity - str->length)) {
 		memcpy(str->buffer + str->length,
@@ -98,9 +87,12 @@ stringAppendBuffer(String *str, const char *buffer, int length) {
 
 const char*
 stringAsCString(String *str) {
-	if (str->length == 0 || str->buffer[str->length - 1] != '\0') {
-		stringAppendChar(str, '\0');
-	}
+	stringAppendChar(str, '\0');
+	/*
+	 * Don't count the trailing '\0' in length. This will cause
+	 * any append operation to correctly overwrite the '\0'.
+	 */
+	str->length = str->length - 1;
 
 	return str->buffer;
 }
