@@ -10,7 +10,7 @@ all: libcute.a test
 libcute.a: $(OBJS) 
 	ar rcs libcute.a $(OBJS)
 test: test.o libcute.a $(HEADERS)
-	gcc -L. -o test test.o -lcute
+	gcc -L. -o test test.o -lcute -lm
 clean:
 	rm $(OBJS)
 	rm libcute.a
