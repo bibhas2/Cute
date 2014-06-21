@@ -10,9 +10,21 @@ typedef struct _String {
 } String;
 
 /**
- * Create a new String with capacity.
+ * Creates a new empty String with capacity for 65 characters.
  */
-String* newString(int capacity);
+String* newString();
+/**
+ * Create a new empty String with capacity.
+ */
+String* newStringWithCapacity(int capacity);
+/**
+ * Creates a new empty String initialized with a C String.
+ */
+String* newStringWithCString(const char *str);
+/**
+ * Creates a new empty String initialized with a String.
+ */
+String* newStringWithString(String *str);
 /**
  * Adds a char to the end of the String. Grows the String if needed.
  * A String is grown by double the current capacity.
@@ -44,6 +56,10 @@ char stringGetChar(String *str, int index);
  * Safely sets character at an index after bounds checking.
  */
 void stringSetChar(String *str, int index, char ch);
+/**
+ * Compare two strings. Returns 1 if two strings match, 0 otherwise.
+ */
+int stringEquals(String *str1, String *str2);
 /**
  * Frees memory for a String.
  */

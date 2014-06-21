@@ -7,14 +7,42 @@
 #include "String.h"
 
 String*
-newString(int capacity) {
-	String* a = malloc(sizeof(String));
+newString() {
+	return newStringWithCapacity(65);
+}
 
-	a->buffer = malloc(sizeof(char) * capacity);
-	a->capacity = capacity;
-	a->length = 0;
+String*
+newStringWithCapacity(int capacity) {
+	String* str = malloc(sizeof(String));
 
-	return a;
+	str->buffer = malloc(sizeof(char) * capacity);
+	str->capacity = capacity;
+	str->length = 0;
+
+	return str;
+}
+
+String*
+_newStringWithBuffer(const char *buffer, int length) {
+	String* str = malloc(sizeof(String));
+
+	str->capacity = length + 65; //A bit of extra room
+	str->length = length;
+	str->buffer = malloc(sizeof(char) * str->capacity);
+
+	memcpy(str->buffer, buffer, length);
+
+	return str;
+}
+
+String* 
+newStringWithCString(const char *str) {
+	return _newStringWithBuffer(str, strlen(str));
+}
+
+String* 
+newStringWithString(String *str) {
+	return _newStringWithBuffer(str->buffer, str->length);
 }
 
 void
@@ -122,6 +150,15 @@ stringSetChar(String *str, int index, char ch) {
 	assert(index >= 0 && index < str->length);
 
 	str->buffer[index] = ch;
+}
+
+int 
+stringEquals(String *str1, String *str2) {
+	if (str1->length != str2->length) {
+		return 0;
+	}
+
+	return strncmp(str1->buffer, str2->buffer, str1->length) == 0;
 }
 
 void

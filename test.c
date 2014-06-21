@@ -1,29 +1,11 @@
 #include <stdio.h>
-#include "Dictionary.h"
+#include "String.h"
 
 int
 main() {
-	Dictionary *d = newDictionary();
+	String *str1 = newStringWithCString("Hello World");
+	String *str2 = newStringWithString(str1);
 
-	dictionaryPut(d, "one", "One - 1");
-	dictionaryPut(d, "two", "Two - 2");
-
-	char *val = dictionaryGet(d, "two");
-	printf("Val %s\n", val);
-
-	val = dictionaryGet(d, "one");
-	printf("Val %s\n", val);
-
-	val = dictionaryGet(d, "three");
-	printf("Val %s\n", val);
-
-	dictionaryRemove(d, "one");
-	dictionaryRemove(d, "two");
-	dictionaryRemove(d, "three");
-	val = dictionaryGet(d, "one");
-	printf("Val %s\n", val);
-	val = dictionaryGet(d, "two");
-	printf("Val %s\n", val);
-
-	deleteDictionary(d);
+	printf("%s:%s\n", stringAsCString(str1), stringAsCString(str2));
+	printf("Equals: %d\n", stringEquals(str1, str2));
 }
