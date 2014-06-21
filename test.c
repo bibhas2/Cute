@@ -18,4 +18,5 @@ main() {
 	printf("%s:%s\n", stringAsCString(str1), stringAsCString(str2));
 	printf("%d:%d\n", str1->length, str2->length);
 	printf("Equals: %d\n", stringEquals(str1, str2));
+	printf("Equals: %d\n", stringEquals(str1, str1));
 }

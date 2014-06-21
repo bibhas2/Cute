@@ -146,6 +146,12 @@ stringSetChar(String *str, int index, char ch) {
 
 int 
 stringEquals(String *str1, String *str2) {
+	if (str1 == str2) {
+		return 1;
+	}
+	if (str1 == NULL || str2 == NULL) {
+		return 0;
+	}
 	if (str1->length != str2->length) {
 		return 0;
 	}

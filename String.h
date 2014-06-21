@@ -58,6 +58,8 @@ char stringGetChar(String *str, int index);
 void stringSetChar(String *str, int index, char ch);
 /**
  * Compare two strings. Returns 1 if two strings match, 0 otherwise.
+ * This function will perform better than strncmp in some cases because
+ * a few extra trivial testing based on length and pointer equality is done.
  */
 int stringEquals(String *str1, String *str2);
 /**
