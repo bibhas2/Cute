@@ -16,3 +16,5 @@ void deleteDictionary(Dictionary* d);
 void *dictionaryGet(Dictionary *d, const char *s);
 void dictionaryPut(Dictionary *d, const char *key, void *value);
 void *dictionaryRemove(Dictionary *d, const char *key);
+void dictionaryClear(Dictionary* d);
+void dictionaryIterate(Dictionary* d, int (*iterate_function)(const char *key, void *value));

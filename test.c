@@ -1,22 +1,21 @@
 #include <stdio.h>
-#include "String.h"
+#include "Dictionary.h"
+
+int
+print_all(const char* key, void *value) {
+	printf("%s=%s\n", key, value);
+
+	return 1;
+}
 
 int
 main() {
-	String *str1 = newStringWithCString("Hello World");
-	String *str2 = newStringWithCapacity(2);
+	Dictionary *dict = newDictionary();
+	
+	dictionaryPut(dict, "US", "United States of America");
+	dictionaryPut(dict, "CA", "Canada");
 
-	stringAppendBuffer(str2, "ab", 2);
+	dictionaryIterate(dict, print_all);
 
-	printf("%s:%s\n", stringAsCString(str1), stringAsCString(str2));
-	printf("%s:%s\n", stringAsCString(str1), stringAsCString(str2));
-
-	stringAppendBuffer(str2, "cd", 2);
-
-	printf("%s:%s\n", stringAsCString(str1), stringAsCString(str2));
-	printf("%s:%s\n", stringAsCString(str1), stringAsCString(str2));
-	printf("%s:%s\n", stringAsCString(str1), stringAsCString(str2));
-	printf("%d:%d\n", str1->length, str2->length);
-	printf("Equals: %d\n", stringEquals(str1, str2));
-	printf("Equals: %d\n", stringEquals(str1, str1));
+	return 0;
 }

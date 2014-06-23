@@ -29,7 +29,7 @@ newDictionaryWithSize(int bucketSize) {
 }
 
 void
-deleteDictionary(Dictionary* d) {
+dictionaryClear(Dictionary* d) {
 	for (int i = 0; i < d->numBuckets; ++i) {
 		struct Node *n = d->buckets[i];
 		while (n != NULL) {
@@ -38,7 +38,14 @@ deleteDictionary(Dictionary* d) {
 			free(n);
 			n = next;
 		}
+		d->buckets[i] = NULL;
 	}
+}
+
+void
+deleteDictionary(Dictionary* d) {
+	dictionaryClear(d);
+
 	free(d->buckets);
 	free(d);
 }
@@ -106,4 +113,21 @@ dictionaryPut(Dictionary *d, const char *key, void *value)
     } 
 
     np->value = value;
+}
+
+void 
+dictionaryIterate(Dictionary* dict, 
+	int (*iterate_function)(const char *key, void *value)) {
+
+        for (int i = 0; i < dict->numBuckets; ++i) {
+                struct Node *n = dict->buckets[i];
+
+                while (n != NULL) {
+			int ret = iterate_function(n->key, n->value);
+			if (ret == 0) {
+				return;
+			}
+                        n = n->next;
+                }
+        }
 }
