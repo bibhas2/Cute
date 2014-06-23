@@ -4,7 +4,7 @@
 #include "Dictionary.h"
 
 /* hash: form hash value for string s */
-unsigned hash(Dictionary *d, char *s)
+unsigned default_hash_function(Dictionary *d, const char *s)
 {
     unsigned hashval;
     for (hashval = 0; *s != '\0'; s++)
@@ -23,6 +23,7 @@ newDictionaryWithSize(int bucketSize) {
 
 	d->buckets = calloc(bucketSize, sizeof(struct Node*));
 	d->numBuckets = bucketSize;
+	d->hash_function = default_hash_function;
 
 	return d;
 }
@@ -43,19 +44,19 @@ deleteDictionary(Dictionary* d) {
 }
 
 /* _dictNodeGet: look for s in buckets */
-struct Node *_dictNodeGet(Dictionary *d, char *s)
+struct Node *_dictNodeGet(Dictionary *d, const char *s)
 {
     struct Node *np;
-    for (np = d->buckets[hash(d, s)]; np != NULL; np = np->next)
+    for (np = d->buckets[d->hash_function(d, s)]; np != NULL; np = np->next)
         if (strcmp(s, np->key) == 0)
           return np; /* found */
     return NULL; /* not found */
 }
 
-void *dictionaryRemove(Dictionary *d, char *key)
+void *dictionaryRemove(Dictionary *d, const char *key)
 {
 	struct Node *np, *prev = NULL;
-	unsigned index = hash(d, key);
+	unsigned index = d->hash_function(d, key);
 
 	for (np = d->buckets[index]; np != NULL; np = np->next) {
 		if (strcmp(key, np->key) == 0) {
@@ -77,7 +78,7 @@ void *dictionaryRemove(Dictionary *d, char *key)
 	return NULL; /* not found */
 }
 
-void* dictionaryGet(Dictionary *d, char *s) {
+void* dictionaryGet(Dictionary *d, const char *s) {
 	struct Node *n = _dictNodeGet(d, s);
 
 	if (n == NULL) {
@@ -89,7 +90,7 @@ void* dictionaryGet(Dictionary *d, char *s) {
 
 /* install: put (key, value) in buckets */
 void
-dictionaryPut(Dictionary *d, char *key, void *value)
+dictionaryPut(Dictionary *d, const char *key, void *value)
 {
     struct Node *np;
     unsigned hashval;
@@ -99,7 +100,7 @@ dictionaryPut(Dictionary *d, char *key, void *value)
         np->key = strdup(key);
 	assert(np->key != NULL);
 
-        hashval = hash(d, key);
+        hashval = d->hash_function(d, key);
         np->next = d->buckets[hashval];
         d->buckets[hashval] = np;
     } 
