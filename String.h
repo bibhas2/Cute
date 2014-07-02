@@ -18,11 +18,11 @@ String* newString();
  */
 String* newStringWithCapacity(int capacity);
 /**
- * Creates a new empty String initialized with a C String.
+ * Creates a new String initialized with a C String.
  */
 String* newStringWithCString(const char *str);
 /**
- * Creates a new empty String initialized with a String.
+ * Creates a new String initialized with a String.
  */
 String* newStringWithString(String *str);
 /**
