@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-std=c99
-OBJS=String.o Array.o Dictionary.o
-HEADERS=String.h Array.h Dictionary.h
+OBJS=String.o Array.o Dictionary.o Buffer.o
+HEADERS=String.h Array.h Dictionary.h Buffer.h
 
 all: libcute.a test words
 
