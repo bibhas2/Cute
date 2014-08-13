@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include <math.h>
 #include "String.h"
 
 String*
@@ -73,11 +72,9 @@ stringAppendBuffer(String *str, const char *buffer, int length) {
 
 		return;
 	}
-	//Grow the string
+	//Grow the string to twice the new length
 	int newLength = str->length + length;
-	int multiplier = (int) ceil(
-		(double) newLength / (double) str->capacity);
-	str->capacity *= multiplier;
+	str->capacity = 2 * newLength;
 	str->buffer = realloc(str->buffer, str->capacity * sizeof(char));
 	memcpy(str->buffer + str->length,
 		buffer,

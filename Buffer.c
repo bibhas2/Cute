@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include <math.h>
 #include "Buffer.h"
 
 Buffer* newBuffer() {
@@ -59,11 +58,9 @@ bufferAppendBytes(Buffer *buffer, const char *bytes, int length) {
 
 		return;
 	}
-	//Grow the buffer
+	//Grow the buffer to twice the new length
 	int newLength = buffer->length + length;
-	int multiplier = (int) ceil(
-		(double) newLength / (double) buffer->capacity);
-	buffer->capacity *= multiplier;
+	buffer->capacity = 2 * newLength;
 	buffer->buffer = realloc(buffer->buffer, buffer->capacity * sizeof(char));
 	memcpy(buffer->buffer + buffer->length, bytes, length);
 	buffer->length = newLength;
