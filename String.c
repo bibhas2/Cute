@@ -14,7 +14,11 @@ String*
 newStringWithCapacity(int capacity) {
 	String* str = malloc(sizeof(String));
 
+	assert(str != NULL);
+
 	str->buffer = malloc(sizeof(char) * capacity);
+	assert(str->buffer != NULL);
+
 	str->capacity = capacity;
 	str->length = 0;
 
@@ -25,9 +29,12 @@ String*
 _newStringWithBuffer(const char *buffer, int length) {
 	String* str = malloc(sizeof(String));
 
+	assert(str != NULL);
+
 	str->capacity = length + 65; //A bit of extra room
 	str->length = length;
 	str->buffer = malloc(sizeof(char) * str->capacity);
+	assert(str->buffer != NULL);
 
 	memcpy(str->buffer, buffer, length);
 
@@ -49,6 +56,7 @@ stringAppendChar(String *str, char ch) {
 	if (str->length == str->capacity) {
 		str->buffer = realloc(str->buffer,
 			str->capacity * sizeof(char) * 2);
+		assert(str->buffer != NULL);
 		str->capacity *= 2;
 	}
 
@@ -76,6 +84,7 @@ stringAppendBuffer(String *str, const char *buffer, int length) {
 	int newLength = str->length + length;
 	str->capacity = 2 * newLength;
 	str->buffer = realloc(str->buffer, str->capacity * sizeof(char));
+	assert(str->buffer != NULL);
 	memcpy(str->buffer + str->length,
 		buffer,
 		length);

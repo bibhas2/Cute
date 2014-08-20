@@ -10,7 +10,10 @@ Array*
 newArray(int capacity) {
 	Array* a = malloc(sizeof(Array));
 
+	assert(a != NULL);
+
 	a->buffer = malloc(sizeof(void*) * capacity);
+	assert(a->buffer != NULL);
 	a->capacity = capacity;
 	a->length = 0;
 
@@ -37,6 +40,7 @@ arrayAdd(Array *a, void *obj) {
 	if (a->length == a->capacity) {
 		a->buffer = realloc(a->buffer,
 			a->capacity * sizeof(void*) * 2);
+		assert(a->buffer != NULL);
 		a->capacity *= 2;
 	}
 

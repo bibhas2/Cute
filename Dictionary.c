@@ -20,8 +20,10 @@ newDictionary() {
 Dictionary*
 newDictionaryWithSize(int bucketSize) {
 	Dictionary *d = malloc(sizeof(Dictionary));
+	assert(d != NULL);
 
 	d->buckets = calloc(bucketSize, sizeof(struct Node*));
+	assert(d->buckets != NULL);
 	d->numBuckets = bucketSize;
 	d->hash_function = default_hash_function;
 
