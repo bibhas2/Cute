@@ -10,7 +10,7 @@ Buffer* newBuffer() {
 }
 
 Buffer*
-newBufferWithCapacity(int capacity) {
+newBufferWithCapacity(size_t capacity) {
 	Buffer* buffer = malloc(sizeof(Buffer));
 	assert(buffer != NULL);
 
@@ -23,7 +23,7 @@ newBufferWithCapacity(int capacity) {
 	return buffer;
 }
 
-Buffer* newBufferWithBytes(const char *bytes, int length) {
+Buffer* newBufferWithBytes(const char *bytes, size_t length) {
 	Buffer* buffer = malloc(sizeof(Buffer));
 	assert(buffer != NULL);
 
@@ -55,7 +55,7 @@ void bufferAppendByte(Buffer *buffer, char ch) {
 }
 
 void
-bufferAppendBytes(Buffer *buffer, const char *bytes, int length) {
+bufferAppendBytes(Buffer *buffer, const char *bytes, size_t length) {
 	//Do we have room to fit the buffer?
 	if (length <= (buffer->capacity - buffer->length)) {
 		memcpy(buffer->buffer + buffer->length, bytes, length);
@@ -64,7 +64,7 @@ bufferAppendBytes(Buffer *buffer, const char *bytes, int length) {
 		return;
 	}
 	//Grow the buffer to twice the new length
-	int newLength = buffer->length + length;
+	size_t newLength = buffer->length + length;
 	buffer->capacity = 2 * newLength;
 	buffer->buffer = realloc(buffer->buffer, buffer->capacity * sizeof(char));
 	assert(buffer->buffer != NULL);
@@ -72,13 +72,13 @@ bufferAppendBytes(Buffer *buffer, const char *bytes, int length) {
 	buffer->length = newLength;
 }
 
-char bufferGetByte(Buffer *buffer, int index) {
+char bufferGetByte(Buffer *buffer, size_t index) {
 	assert(index >= 0 && index < buffer->length);
 
 	return buffer->buffer[index];
 }
 
-void bufferSetByte(Buffer *buffer, int index, char byte) {
+void bufferSetByte(Buffer *buffer, size_t index, char byte) {
 	assert(index >= 0 && index < buffer->length);
 
 	buffer->buffer[index] = byte;

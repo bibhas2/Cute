@@ -11,7 +11,7 @@ newString() {
 }
 
 String*
-newStringWithCapacity(int capacity) {
+newStringWithCapacity(size_t capacity) {
 	String* str = malloc(sizeof(String));
 
 	assert(str != NULL);
@@ -26,7 +26,7 @@ newStringWithCapacity(int capacity) {
 }
 
 String*
-_newStringWithBuffer(const char *buffer, int length) {
+_newStringWithBuffer(const char *buffer, size_t length) {
 	String* str = malloc(sizeof(String));
 
 	assert(str != NULL);
@@ -70,7 +70,7 @@ stringAppendString(String *str, String *toAdd) {
 }
 
 void
-stringAppendBuffer(String *str, const char *buffer, int length) {
+stringAppendBuffer(String *str, const char *buffer, size_t length) {
 	//Do we have room to fit the string?
 	if (length <= (str->capacity - str->length)) {
 		memcpy(str->buffer + str->length,
@@ -81,7 +81,7 @@ stringAppendBuffer(String *str, const char *buffer, int length) {
 		return;
 	}
 	//Grow the string to twice the new length
-	int newLength = str->length + length;
+	size_t newLength = str->length + length;
 	str->capacity = 2 * newLength;
 	str->buffer = realloc(str->buffer, str->capacity * sizeof(char));
 	assert(str->buffer != NULL);
@@ -109,7 +109,7 @@ stringTrim(String *str) {
 		return;
 	}
 
-	int start, end;
+	size_t start, end;
 
 	for (start = 0; start < str->length; ++start) {
 		if (!isspace(str->buffer[start])) {
@@ -137,14 +137,14 @@ stringTrim(String *str) {
 }
 
 char 
-stringGetChar(String *str, int index) {
+stringGetChar(String *str, size_t index) {
 	assert(index >= 0 && index < str->length);
 
 	return str->buffer[index];
 }
 
 void 
-stringSetChar(String *str, int index, char ch) {
+stringSetChar(String *str, size_t index, char ch) {
 	assert(index >= 0 && index < str->length);
 
 	str->buffer[index] = ch;

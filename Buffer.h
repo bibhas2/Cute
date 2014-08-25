@@ -5,9 +5,9 @@
  */
 typedef struct _Buffer {
 	char *buffer;
-	int position;
-	int length;
-	int capacity;
+	size_t position;
+	size_t length;
+	size_t capacity;
 } Buffer;
 
 /**
@@ -17,11 +17,11 @@ Buffer* newBuffer();
 /**
  * Create a new empty Buffer with capacity.
  */
-Buffer* newBufferWithCapacity(int capacity);
+Buffer* newBufferWithCapacity(size_t capacity);
 /**
  * Creates a new Buffer object by copying the supplied bytes.
  */
-Buffer* newBufferWithBytes(const char *bytes, int length);
+Buffer* newBufferWithBytes(const char *bytes, size_t length);
 /**
  * Creates a new Buffer by copying another Buffer.
  */
@@ -34,7 +34,7 @@ void bufferAppendByte(Buffer *buffer, char ch);
 /**
  * Append a character buffer to the end of the Buffer. Buffer is grown if needed.
  */
-void bufferAppendBytes(Buffer *buffer, const char *bytes, int length);
+void bufferAppendBytes(Buffer *buffer, const char *bytes, size_t length);
 /**
  * Append a Buffer to the end of the Buffer. Buffer is grown if needed.
  */
@@ -47,11 +47,11 @@ char bufferNextByte(Buffer *buffer);
 /**
  * Safely gets a byte at an index after bounds checking.
  */
-char bufferGetByte(Buffer *buffer, int index);
+char bufferGetByte(Buffer *buffer, size_t index);
 /**
  * Safely sets byte at an index after bounds checking.
  */
-void bufferSetByte(Buffer *buffer, int index, char ch);
+void bufferSetByte(Buffer *buffer, size_t index, char ch);
 /**
  * Frees memory for a Buffer.
  */

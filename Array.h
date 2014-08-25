@@ -5,22 +5,22 @@
  */
 typedef struct _Array {
 	void **buffer;
-	int length;
-	int capacity;
+	size_t length;
+	size_t capacity;
 } Array;
 
 /**
  * Create a new Array with capacity.
  */
-Array* newArray(int capacity);
+Array* newArray(size_t capacity);
 /**
  * Get the object at an index after doing bounds checking.
  */
-void* arrayGet(Array *a, int index);
+void* arrayGet(Array *a, size_t index);
 /**
  * Set the object at an index after doing bounds checking.
  */
-void* arraySet(Array *a, int index, void *obj);
+void* arraySet(Array *a, size_t index, void *obj);
 /**
  * Add a new object at the end of the array. The array is grown if needed.
  * Every time an array is grown, it's capacity is doubled. This is done

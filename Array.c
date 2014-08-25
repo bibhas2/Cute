@@ -7,7 +7,7 @@
 #include "Array.h"
 
 Array*
-newArray(int capacity) {
+newArray(size_t capacity) {
 	Array* a = malloc(sizeof(Array));
 
 	assert(a != NULL);
@@ -21,13 +21,13 @@ newArray(int capacity) {
 }
 
 void*
-arrayGet(Array *a, int index) {
+arrayGet(Array *a, size_t index) {
 	assert(index >= 0 && index < a->length);
 
 	return a->buffer[index];
 }
 void*
-arraySet(Array *a, int index, void *obj) {
+arraySet(Array *a, size_t index, void *obj) {
 	assert(index >= 0 && index < a->length);
 
 	a->buffer[index] = obj;

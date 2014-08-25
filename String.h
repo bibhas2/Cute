@@ -5,8 +5,8 @@
  */
 typedef struct _String {
 	char *buffer;
-	int length;
-	int capacity;
+	size_t length;
+	size_t capacity;
 } String;
 
 /**
@@ -16,7 +16,7 @@ String* newString();
 /**
  * Create a new empty String with capacity.
  */
-String* newStringWithCapacity(int capacity);
+String* newStringWithCapacity(size_t capacity);
 /**
  * Creates a new String initialized with a C String.
  */
@@ -33,7 +33,7 @@ void stringAppendChar(String *str, char ch);
 /**
  * Append a character buffer to the end of the String.
  */
-void stringAppendBuffer(String *str, const char *buffer, int length);
+void stringAppendBuffer(String *str, const char *buffer, size_t length);
 /**
  * Append a String to the end of the String.
  */
@@ -51,11 +51,11 @@ void stringTrim(String *str);
 /**
  * Safely gets character at an index after bounds checking.
  */
-char stringGetChar(String *str, int index);
+char stringGetChar(String *str, size_t index);
 /**
  * Safely sets character at an index after bounds checking.
  */
-void stringSetChar(String *str, int index, char ch);
+void stringSetChar(String *str, size_t index, char ch);
 /**
  * Compare two strings. Returns 1 if two strings match, 0 otherwise.
  * This function will perform better than strncmp in some cases because
