@@ -39,6 +39,10 @@ void stringAppendBuffer(String *str, const char *buffer, size_t length);
  */
 void stringAppendString(String *str, String *toAdd);
 /**
+ * Append a C string to the end of the String.
+ */
+void stringAppendCString(String *str, const char* toAdd);
+/**
  * returns the internal buffer of a String as a NULL terminated C string.
  * The returned buffer belongs to the String object and should not be freed
  * by the caller.

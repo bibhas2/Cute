@@ -91,6 +91,10 @@ stringAppendBuffer(String *str, const char *buffer, size_t length) {
 	str->length = newLength;
 }
 
+void stringAppendCString(String *str, const char* toAdd) {
+	stringAppendBuffer(str, toAdd, strlen(toAdd));
+}
+
 const char*
 stringAsCString(String *str) {
 	stringAppendChar(str, '\0');
