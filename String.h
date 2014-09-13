@@ -66,6 +66,9 @@ void stringSetChar(String *str, size_t index, char ch);
  * a few extra trivial testing based on length and pointer equality is done.
  */
 int stringEquals(String *str1, String *str2);
+int stringEqualsCString(String *str1, const char *str2);
+int stringStartsWith(String *str1, String *str2);
+int stringStartsWithCString(String *str1, const char *str2);
 /**
  * Frees memory for a String.
  */

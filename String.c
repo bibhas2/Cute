@@ -115,22 +115,27 @@ stringTrim(String *str) {
 
 	size_t start, end;
 
+	//Search for first non-space
 	for (start = 0; start < str->length; ++start) {
 		if (!isspace(str->buffer[start])) {
 			break;
 		}
 	}
-
-	for (end = str->length - 1; end >= 0; --end) {
-		if (!isspace(str->buffer[end])) {
-			break;
-		}
-	}
 	//All spaces?
-	if (end < 0) {
+	if (start == str->length) {
 		str->length = 0;
 
 		return;
+	}
+
+	//Search for last non-space
+	for (end = str->length - 1; ; --end) {
+		if (!isspace(str->buffer[end])) {
+			break;
+		}
+		if (end == 0) {
+			break;
+		}
 	}
 	//Trim start
 	if (start > 0) {
@@ -156,17 +161,99 @@ stringSetChar(String *str, size_t index, char ch) {
 
 int 
 stringEquals(String *str1, String *str2) {
-	if (str1 == str2) {
-		return 1;
-	}
 	if (str1 == NULL || str2 == NULL) {
 		return 0;
+	}
+	if (str1 == str2) {
+		return 1;
 	}
 	if (str1->length != str2->length) {
 		return 0;
 	}
 
 	return strncmp(str1->buffer, str2->buffer, str1->length) == 0;
+}
+
+int 
+stringEqualsCString(String *str1, const char *str2) {
+	if (str1 == NULL || str2 == NULL) {
+		return 0;
+	}
+
+	size_t len = str1->length;
+	const char *ptr1 = str1->buffer;
+
+	/*
+	 * For a match, both strings must have same length and bytes.
+	 * Keep in mind, the buffer of str1 may contain '\0' in the middle
+	 * since it is not null terminated. These are reasons why we can't just
+	 * call strncmp. We have to cook up our own home made stuff.
+	 *
+	 * Loop as long as the characters match, but don't go beyond
+	 * the boundary of either string.
+	 */
+	for (; 
+		(len > 0) && 
+		(*str2 != '\0') && 
+		(*ptr1 == *str2);
+		--len, ptr1++, str2++) {
+	}
+
+	/*
+	 * The strings match if we have traversed both strings completely.
+	 */
+	return (len == 0 && *str2 == '\0');
+}
+
+int stringStartsWith(String *str1, String *str2) {
+	if (str1 == NULL || str2 == NULL) {
+		return 0;
+	}
+
+	if (str2->length > str1->length) {
+		//Substring is bigger.
+		return 0;
+	}
+
+	size_t len = str2->length;
+	const char *ptr1 = str1->buffer;
+	const char *ptr2 = str2->buffer;
+
+	/*
+	 * Don't use strnstr since in most platforms it calls strlen
+	 * once. We can avoid that since we know the lengths anyway.
+	 */
+	for (; 
+		(len > 0) &&
+		(*ptr1 == *ptr2); 
+		--len, ptr1++, ptr2++) {
+	}
+
+	//Have we travered the entire substring?
+	return (len == 0);
+}
+
+int stringStartsWithCString(String *str1, const char *str2) {
+	if (str1 == NULL || str2 == NULL) {
+		return 0;
+	}
+
+	size_t len = str1->length;
+	const char *ptr1 = str1->buffer;
+
+	/*
+	 * Don't use strnstr since in most platforms it calls strlen
+	 * once. We can avoid that since we know one of the lengths anyway.
+	 */
+	for (; 
+		(len > 0) &&
+		(*str2 != '\0') &&
+		(*ptr1 == *str2); 
+		--len, ptr1++, str2++) {
+	}
+
+	//Have we travered the entire substring?
+	return (*str2 == '\0');
 }
 
 void
