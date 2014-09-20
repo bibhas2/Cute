@@ -106,7 +106,7 @@ dictionaryPut(Dictionary *d, const char *key, void *value)
     if ((np = _dictNodeGet(d, key)) == NULL) { /* not found */
         np = (struct Node *) malloc(sizeof(*np));
 	assert(np != NULL);
-        np->key = strdup(key);
+        np->key = _strdup(key);
 	assert(np->key != NULL);
 
         hashval = d->hash_function(d, key);
