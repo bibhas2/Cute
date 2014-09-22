@@ -3,6 +3,10 @@
 #include <assert.h>
 #include "Dictionary.h"
 
+#ifdef _WIN32
+#define strdup _strdup
+#endif
+
 /* hash: form hash value for string s */
 unsigned default_hash_function(Dictionary *d, const char *s)
 {
@@ -106,7 +110,7 @@ dictionaryPut(Dictionary *d, const char *key, void *value)
     if ((np = _dictNodeGet(d, key)) == NULL) { /* not found */
         np = (struct Node *) malloc(sizeof(*np));
 	assert(np != NULL);
-        np->key = _strdup(key);
+        np->key = strdup(key);
 	assert(np->key != NULL);
 
         hashval = d->hash_function(d, key);
