@@ -24,3 +24,4 @@ void listRemove(List *list, void *data);
 void listRemoveNode(List *list, ListNode *node);
 void listRemoveFirst(List *list);
 void listRemoveLast(List *list);
+void listReverse(List *list);

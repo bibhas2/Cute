@@ -162,3 +162,28 @@ void listRemoveLast(List *list) {
 
 	listRemoveNode(list, list->last);
 }
+
+void listReverse(List *list) {
+	if (list->size < 2) {
+		return;
+	}
+
+	ListNode *last = list->last;
+	ListNode *nodeToMove = list->last->previous;
+
+	list->first = last;
+
+	while (nodeToMove != NULL) {
+		ListNode *nextToMove = nodeToMove->previous;
+
+		last->next = nodeToMove;
+		nodeToMove->previous = last;
+		last = nodeToMove;
+
+		nodeToMove = nextToMove;
+	}
+
+	list->last = last;
+	list->first->previous = NULL;
+	list->last->next = NULL;
+}
