@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
+
 #include "Dictionary.h"
 
 #ifdef _WIN32
@@ -101,6 +102,16 @@ void* dictionaryGet(Dictionary *d, const char *s) {
 	return n->value;
 }
 
+char * copy_string(const char *s) {
+  size_t len = strlen (s) + 1;
+  void *new = malloc (len);
+
+  if (new == NULL)
+    return NULL;
+
+  return (char *) memcpy (new, s, len);
+}
+
 /* install: put (key, value) in buckets */
 void
 dictionaryPut(Dictionary *d, const char *key, void *value)
@@ -110,7 +121,7 @@ dictionaryPut(Dictionary *d, const char *key, void *value)
     if ((np = _dictNodeGet(d, key)) == NULL) { /* not found */
         np = (struct Node *) malloc(sizeof(*np));
 	assert(np != NULL);
-        np->key = strdup(key);
+        np->key = copy_string(key);
 	assert(np->key != NULL);
 
         hashval = d->hash_function(d, key);
