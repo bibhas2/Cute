@@ -41,12 +41,12 @@ _newStringWithBuffer(const char *buffer, size_t length) {
 	return str;
 }
 
-String* 
+String*
 newStringWithCString(const char *str) {
 	return _newStringWithBuffer(str, strlen(str));
 }
 
-String* 
+String*
 newStringWithString(String *str) {
 	return _newStringWithBuffer(str->buffer, str->length);
 }
@@ -64,7 +64,7 @@ stringAppendChar(String *str, char ch) {
 	str->length += 1;
 }
 
-void 
+void
 stringAppendString(String *str, String *toAdd) {
 	stringAppendBuffer(str, toAdd->buffer, toAdd->length);
 }
@@ -145,21 +145,21 @@ stringTrim(String *str) {
 	str->length = end  - start + 1;
 }
 
-char 
+char
 stringGetChar(String *str, size_t index) {
 	assert(index >= 0 && index < str->length);
 
 	return str->buffer[index];
 }
 
-void 
+void
 stringSetChar(String *str, size_t index, char ch) {
 	assert(index >= 0 && index < str->length);
 
 	str->buffer[index] = ch;
 }
 
-int 
+int
 stringEquals(String *str1, String *str2) {
 	if (str1 == NULL || str2 == NULL) {
 		return 0;
@@ -174,7 +174,7 @@ stringEquals(String *str1, String *str2) {
 	return strncmp(str1->buffer, str2->buffer, str1->length) == 0;
 }
 
-int 
+int
 stringEqualsCString(String *str1, const char *str2) {
 	if (str1 == NULL || str2 == NULL) {
 		return 0;
@@ -192,9 +192,9 @@ stringEqualsCString(String *str1, const char *str2) {
 	 * Loop as long as the characters match, but don't go beyond
 	 * the boundary of either string.
 	 */
-	for (; 
-		(len > 0) && 
-		(*str2 != '\0') && 
+	for (;
+		(len > 0) &&
+		(*str2 != '\0') &&
 		(*ptr1 == *str2);
 		--len, ptr1++, str2++) {
 	}
@@ -223,9 +223,9 @@ int stringStartsWith(String *str1, String *str2) {
 	 * Don't use strnstr since in most platforms it calls strlen
 	 * once. We can avoid that since we know the lengths anyway.
 	 */
-	for (; 
+	for (;
 		(len > 0) &&
-		(*ptr1 == *ptr2); 
+		(*ptr1 == *ptr2);
 		--len, ptr1++, ptr2++) {
 	}
 
@@ -245,15 +245,35 @@ int stringStartsWithCString(String *str1, const char *str2) {
 	 * Don't use strnstr since in most platforms it calls strlen
 	 * once. We can avoid that since we know one of the lengths anyway.
 	 */
-	for (; 
+	for (;
 		(len > 0) &&
 		(*str2 != '\0') &&
-		(*ptr1 == *str2); 
+		(*ptr1 == *str2);
 		--len, ptr1++, str2++) {
 	}
 
 	//Have we travered the entire substring?
 	return (*str2 == '\0');
+}
+
+void stringReadLine(FILE *file, String *str) {
+	str->length = 0;
+
+	while (1) {
+		int ch = fgetc(file);
+
+		if (ch == '\r') {
+			continue; //Eat
+		}
+
+		if (ch == EOF || ch == '\n') {
+			break;
+		}
+
+		stringAppendChar(str, ch);
+	}
+
+	return;
 }
 
 void

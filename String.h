@@ -69,6 +69,13 @@ int stringEquals(String *str1, String *str2);
 int stringEqualsCString(String *str1, const char *str2);
 int stringStartsWith(String *str1, String *str2);
 int stringStartsWithCString(String *str1, const char *str2);
+
+/**
+ * Reads a line from a file into a string. Carriage returns (\r and \n)
+ * are not included in the string.
+ */
+void stringReadLine(FILE *file, String *str);
+
 /**
  * Frees memory for a String.
  */
