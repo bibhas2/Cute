@@ -256,7 +256,7 @@ int stringStartsWithCString(String *str1, const char *str2) {
 	return (*str2 == '\0');
 }
 
-void stringReadLine(FILE *file, String *str) {
+void stringReadLine(String *str, FILE *file) {
 	str->length = 0;
 
 	while (1) {

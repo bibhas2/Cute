@@ -74,7 +74,7 @@ int stringStartsWithCString(String *str1, const char *str2);
  * Reads a line from a file into a string. Carriage returns (\r and \n)
  * are not included in the string.
  */
-void stringReadLine(FILE *file, String *str);
+void stringReadLine(String *str, FILE *file);
 
 /**
  * Frees memory for a String.
