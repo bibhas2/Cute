@@ -55,6 +55,11 @@ void bufferAppendByte(Buffer *buffer, char ch) {
 }
 
 void
+bufferAppendBuffer(Buffer *buffer, Buffer *toAdd) {
+    bufferAppendBytes(buffer, toAdd->buffer, toAdd->length);
+}
+
+void
 bufferAppendBytes(Buffer *buffer, const char *bytes, size_t length) {
 	//Do we have room to fit the buffer?
 	if (length <= (buffer->capacity - buffer->length)) {
